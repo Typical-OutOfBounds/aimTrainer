@@ -1,5 +1,6 @@
 from tkinter import *
 import random
+import time
 
 class Trainer:
     def __init__(self):
@@ -12,12 +13,23 @@ class Trainer:
         self.start.bind('<Button-1>', self.clicked_start)
         self.start_window = self.canvas1.create_window(10, 10, anchor=NW, window=self.start)
 
+        self.end = Button(self.master, text="End")
+        self.end.configure(width=10)
+        self.end.bind('<Button-1>', self.clicked_end)
+        self.end_window = self.canvas1.create_window(10, 50, anchor=NW, window=self.end)
+
+        self.counter = 0
+
     def clicked_point(self, event):
-        self.canvas1.delete(self.dot)
-        x_coord = random.randint(10, 990)
-        y_coord = random.randint(10, 990)
-        self.dot = self.canvas1.create_oval(x_coord, y_coord, x_coord + 30, y_coord + 30, fill="red", tags="point")
-        self.canvas1.tag_bind("point", "<Button-1>", self.clicked_point)
+        if time.perf_counter() - self.counter > 5:
+            self.master.destroy()
+        else:
+            self.counter = time.perf_counter()
+            self.canvas1.delete(self.dot)
+            x_coord = random.randint(10, 990)
+            y_coord = random.randint(10, 990)
+            self.dot = self.canvas1.create_oval(x_coord, y_coord, x_coord + 30, y_coord + 30, fill="red", tags="point")
+            self.canvas1.tag_bind("point", "<Button-1>", self.clicked_point)
 
     def clicked_start(self, event):
         x_coord = random.randint(10, 990)
