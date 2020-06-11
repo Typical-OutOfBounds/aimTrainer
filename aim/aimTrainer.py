@@ -38,7 +38,7 @@ class Trainer:
         self.canvas1.tag_bind("pointFirst", "<Button-1>", self.clicked_point)
 
     def clicked_end(self, event):
-        pass
+        self.master.destroy()
 
 
 myTrainer = Trainer()
