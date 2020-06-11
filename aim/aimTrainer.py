@@ -1,20 +1,47 @@
 from tkinter import *
 import random
 
-master = Tk()
+class Trainer:
+    def __init__(self):
+        self.master = Tk()
+        self.canvas1 = Canvas(self.master, width=1000, height=1000)
+        self.canvas1.pack()
 
-def clicked_point(event):
-    pass
+        self.start = Button(self.master, text="Start")
+        self.start.configure(width=10)
+        self.start.bind('<Button-1>', self.clicked_start)
+        self.start_window = self.canvas1.create_window(10, 10, anchor=NW, window=self.start)
 
-def clicked_start(event):
-    x_coord = 0
-    y_coord = 0
-    dot = canvas1.create_oval(0,0, 50, 50, fill="red", tags="point")
-    canvas1.tag_bind("point", "<Button-1>", clicked_point)
+    def clicked_point(self, event):
+        self.canvas1.delete(self.dot)
+        x_coord = random.randint(10, 990)
+        y_coord = random.randint(10, 990)
+        self.dot = self.canvas1.create_oval(x_coord, y_coord, x_coord + 30, y_coord + 30, fill="red", tags="point")
+        self.canvas1.tag_bind("point", "<Button-1>", self.clicked_point)
 
-def clicked_end(event):
-    pass
+    def clicked_start(self, event):
+        x_coord = random.randint(10, 990)
+        y_coord = random.randint(10, 990)
+        self.dot = self.canvas1.create_oval(x_coord, y_coord, x_coord + 30, y_coord + 30, fill="red", tags="pointFirst")
+        self.canvas1.tag_bind("pointFirst", "<Button-1>", self.clicked_point)
 
-canvas1 = Canvas(master, width=1000, height=1000)
-canvas1.pack()
+    def clicked_end(self, event):
+        pass
 
+
+myTrainer = Trainer()
+myTrainer.master.mainloop()
+
+# master = Tk()
+#
+#
+#
+# canvas1 = Canvas(master, width=1000, height=1000)
+# canvas1.pack()
+#
+# start = Button(master, text="Start")
+# start.configure(width=10)
+# start.bind('<Button-1>', clicked_start)
+# start_window = canvas1.create_window(10, 10, anchor=NW, window=start)
+#
+# master.mainloop()
