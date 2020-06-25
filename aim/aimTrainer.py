@@ -1,6 +1,7 @@
 from tkinter import *
 import random
 import time
+import serial
 
 class Trainer:
     def __init__(self):
@@ -22,6 +23,10 @@ class Trainer:
 
     def clicked_point(self, event):
         if time.perf_counter() - self.counter > 5:
+            with serial.Serial('COM3', 9600, timeout=1) as ser:
+                ser.write(str.encode('H'))
+                time.sleep(2)
+                ser.write(str.encode('L'))
             self.master.destroy()
         else:
             self.counter = time.perf_counter()
