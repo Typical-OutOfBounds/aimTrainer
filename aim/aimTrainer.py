@@ -41,6 +41,7 @@ class Trainer:
         y_coord = random.randint(10, 990)
         self.dot = self.canvas1.create_oval(x_coord, y_coord, x_coord + 30, y_coord + 30, fill="red", tags="pointFirst")
         self.canvas1.tag_bind("pointFirst", "<Button-1>", self.clicked_point)
+        self.counter = time.perf_counter()
 
     def clicked_end(self, event):
         self.master.destroy()
